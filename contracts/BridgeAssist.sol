@@ -5,7 +5,7 @@ import "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol";
-import "@openzeppelin/contracts-upgradeable/token/ERC20/IERC20Upgradeable.sol";
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 contract BridgeAssist is 
     Initializable,
@@ -138,7 +138,7 @@ contract BridgeAssist is
     function confirmTransaction(uint transactionId) external nonReentrant whenNotPaused transactionExists(transactionId) notConfirmed(transactionId, msg.sender) {
         uint tokenIndex = transactions[transactionId].tokenIndex;
         address token = tokens[tokenIndex];
-        require(transactions[transactionId].value <= IERC20Upgradeable(token).balanceOf(address(this)), "Not enough token to withdraw");
+        require(transactions[transactionId].value <= IERC20(token).balanceOf(address(this)), "Not enough token to withdraw");
         confirmations[transactionId][msg.sender] = true;
         emit Confirmation(msg.sender, transactionId);
         executeTransaction(transactionId);
@@ -151,10 +151,10 @@ contract BridgeAssist is
             address token = tokens[txn.tokenIndex];
             txn.executed = true;
             if(txn.code == COLLECT_CODE) {
-                IERC20Upgradeable(token).transferFrom(txn.destination, address(this), txn.value);
+                IERC20(token).transferFrom(txn.destination, address(this), txn.value);
                 emit Collect(txn.destination, txn.value);
             } else {
-                IERC20Upgradeable(token).transfer(txn.destination, txn.value);
+                IERC20(token).transfer(txn.destination, txn.value);
                 emit Dispense(txn.destination, txn.value);
             }
             return true;
