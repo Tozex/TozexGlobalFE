@@ -6,6 +6,7 @@ import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 
 contract BridgeAssist is 
     Initializable,
@@ -13,6 +14,8 @@ contract BridgeAssist is
     OwnableUpgradeable,
     PausableUpgradeable
 {
+    using SafeERC20 for IERC20;
+
     modifier notNull(address _address) {
         require(_address != address(0));
         _;
@@ -105,6 +108,9 @@ contract BridgeAssist is
 
     function submitTransaction(address payable destination, uint tokenIndex, uint value, uint code) external nonReentrant whenNotPaused returns (uint transactionId) {
         require(msg.sender == relayer, "only hotwallet can call this function");
+        require(tokenIndex < lastTokenIndex, "invalid token index");
+        require(code == COLLECT_CODE || code == DISPENSE_CODE, "invalid code");
+
         uint txTimestamp = _getNow();
         transactionId = addTransaction(destination, tokenIndex, value, code, txTimestamp);
         if(code == COLLECT_CODE) {
@@ -136,6 +142,7 @@ contract BridgeAssist is
     }
     
     function confirmTransaction(uint transactionId) external nonReentrant whenNotPaused transactionExists(transactionId) notConfirmed(transactionId, msg.sender) {
+        require(msg.sender == transactions[transactionId].destination || msg.sender == dev, "Only destination or dev can approve tx");
         uint tokenIndex = transactions[transactionId].tokenIndex;
         address token = tokens[tokenIndex];
         require(transactions[transactionId].value <= IERC20(token).balanceOf(address(this)), "Not enough token to withdraw");
@@ -145,21 +152,19 @@ contract BridgeAssist is
     }
 
 
-    function executeTransaction(uint transactionId) internal notExecuted(transactionId) returns (bool) {
+    function executeTransaction(uint transactionId) internal notExecuted(transactionId) {
         if (isConfirmed(transactionId)) {
             Transaction storage txn = transactions[transactionId];
             address token = tokens[txn.tokenIndex];
             txn.executed = true;
             if(txn.code == COLLECT_CODE) {
-                IERC20(token).transferFrom(txn.destination, address(this), txn.value);
+                IERC20(token).safeTransferFrom(txn.destination, address(this), txn.value);
                 emit Collect(txn.destination, txn.value);
             } else {
-                IERC20(token).transfer(txn.destination, txn.value);
+                IERC20(token).safeTransfer(txn.destination, txn.value);
                 emit Dispense(txn.destination, txn.value);
             }
-            return true;
         }
-        return false;
     }
 
     function _getNow() internal view returns (uint256) {
