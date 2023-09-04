@@ -67,6 +67,7 @@ contract BridgeAssist is
 
     address public dev;
     address public relayer;
+    address public multisig;
 
     mapping(uint => Transaction) public transactions;
     mapping(uint => mapping(address => bool)) public confirmations;
@@ -74,13 +75,15 @@ contract BridgeAssist is
 
     function initialize(
         address _dev, 
-        address _relayer
+        address _relayer,
+        address _multisig
     ) external initializer {
         __Context_init();
         __Ownable_init();
         __Pausable_init();
         dev = _dev;
         relayer = _relayer;
+        multisig = _multisig;
     }
 
     function pause() external onlyOwner {
@@ -113,8 +116,10 @@ contract BridgeAssist is
 
         uint txTimestamp = _getNow();
         transactionId = addTransaction(destination, tokenIndex, value, code, txTimestamp);
+        confirmations[transactionId][relayer] = true;
         if(code == COLLECT_CODE) {
             confirmations[transactionId][destination] = true;
+            confirmations[transactionId][multisig] = true;
             executeTransaction(transactionId);
         }
     }
@@ -135,14 +140,15 @@ contract BridgeAssist is
 
     function isConfirmed(uint transactionId) public view returns (bool) {
         address user = transactions[transactionId].destination;
-        if (confirmations[transactionId][user] || confirmations[transactionId][dev])
+        mapping (address => bool) storage comfirm = confirmations[transactionId];
+        if (comfirm[user] && comfirm[dev] && comfirm[multisig])
             return true;
         else
             return false;
     }
     
     function confirmTransaction(uint transactionId) external nonReentrant whenNotPaused transactionExists(transactionId) notConfirmed(transactionId, msg.sender) {
-        require(msg.sender == transactions[transactionId].destination || msg.sender == dev, "Only destination or dev can approve tx");
+        require(msg.sender == transactions[transactionId].destination || msg.sender == dev || msg.sender == multisig, "Only destination or dev or multisig can approve tx");
         uint tokenIndex = transactions[transactionId].tokenIndex;
         address token = tokens[tokenIndex];
         require(transactions[transactionId].value <= IERC20(token).balanceOf(address(this)), "Not enough token to withdraw");

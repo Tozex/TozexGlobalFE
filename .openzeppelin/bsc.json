@@ -1,0 +1,242 @@
+{
+  "manifestVersion": "3.2",
+  "admin": {
+    "address": "0x8B647441105DF84c2CF322C4eDC6b2C39919d95D",
+    "txHash": "0x7c78a8bedf9826566f9cf4fd223ef391d416bb295426c7eab29069d71f131399"
+  },
+  "proxies": [
+    {
+      "address": "0x93BF5828f7AFff6139E704ba58fF87128E26C1e6",
+      "txHash": "0xde548afcca1d2507c07693bafbe7186ff67cec71aaa4b8e998b6ac194367b6c9",
+      "kind": "transparent"
+    }
+  ],
+  "impls": {
+    "148da346e91b4a13a19933433ac72537cecf4f5872fdb2a643fac33839f35c95": {
+      "address": "0x012f19CD5be398ECF47D55a0a651E9c40add0277",
+      "txHash": "0x66a22660d7fe0111f8b5864d4f2c675d530daf30d9e56fd9189de3a70c74876b",
+      "layout": {
+        "solcVersion": "0.8.5",
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:62",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:67"
+          },
+          {
+            "label": "_status",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_uint256",
+            "contract": "ReentrancyGuardUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\security\\ReentrancyGuardUpgradeable.sol:38"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "2",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "ReentrancyGuardUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\security\\ReentrancyGuardUpgradeable.sol:80"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\utils\\ContextUpgradeable.sol:36"
+          },
+          {
+            "label": "_owner",
+            "offset": 0,
+            "slot": "101",
+            "type": "t_address",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\access\\OwnableUpgradeable.sol:22"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "102",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\access\\OwnableUpgradeable.sol:94"
+          },
+          {
+            "label": "_paused",
+            "offset": 0,
+            "slot": "151",
+            "type": "t_bool",
+            "contract": "PausableUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\security\\PausableUpgradeable.sol:29"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "152",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "PausableUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\security\\PausableUpgradeable.sol:116"
+          },
+          {
+            "label": "transactionCount",
+            "offset": 0,
+            "slot": "201",
+            "type": "t_uint256",
+            "contract": "BridgeAssist",
+            "src": "contracts\\BridgeAssist.sol:64"
+          },
+          {
+            "label": "lastTokenIndex",
+            "offset": 0,
+            "slot": "202",
+            "type": "t_uint256",
+            "contract": "BridgeAssist",
+            "src": "contracts\\BridgeAssist.sol:66"
+          },
+          {
+            "label": "dev",
+            "offset": 0,
+            "slot": "203",
+            "type": "t_address",
+            "contract": "BridgeAssist",
+            "src": "contracts\\BridgeAssist.sol:68"
+          },
+          {
+            "label": "relayer",
+            "offset": 0,
+            "slot": "204",
+            "type": "t_address",
+            "contract": "BridgeAssist",
+            "src": "contracts\\BridgeAssist.sol:69"
+          },
+          {
+            "label": "transactions",
+            "offset": 0,
+            "slot": "205",
+            "type": "t_mapping(t_uint256,t_struct(Transaction)1708_storage)",
+            "contract": "BridgeAssist",
+            "src": "contracts\\BridgeAssist.sol:71"
+          },
+          {
+            "label": "confirmations",
+            "offset": 0,
+            "slot": "206",
+            "type": "t_mapping(t_uint256,t_mapping(t_address,t_bool))",
+            "contract": "BridgeAssist",
+            "src": "contracts\\BridgeAssist.sol:72"
+          },
+          {
+            "label": "tokens",
+            "offset": 0,
+            "slot": "207",
+            "type": "t_mapping(t_uint256,t_address)",
+            "contract": "BridgeAssist",
+            "src": "contracts\\BridgeAssist.sol:73"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_address_payable": {
+            "label": "address payable",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]",
+            "numberOfBytes": "1568"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_mapping(t_address,t_bool)": {
+            "label": "mapping(address => bool)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_address)": {
+            "label": "mapping(uint256 => address)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_mapping(t_address,t_bool))": {
+            "label": "mapping(uint256 => mapping(address => bool))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_struct(Transaction)1708_storage)": {
+            "label": "mapping(uint256 => struct BridgeAssist.Transaction)",
+            "numberOfBytes": "32"
+          },
+          "t_struct(Transaction)1708_storage": {
+            "label": "struct BridgeAssist.Transaction",
+            "members": [
+              {
+                "label": "destination",
+                "type": "t_address_payable",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "tokenIndex",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "value",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "code",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "3"
+              },
+              {
+                "label": "executed",
+                "type": "t_bool",
+                "offset": 0,
+                "slot": "4"
+              },
+              {
+                "label": "txTimestamp",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "5"
+              }
+            ],
+            "numberOfBytes": "192"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          }
+        }
+      }
+    }
+  }
+}
