@@ -8,6 +8,8 @@ import "@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 
+import "./IMultiSigWallet.sol";
+
 contract BridgeAssist is 
     Initializable,
     ReentrancyGuardUpgradeable,
@@ -42,13 +44,14 @@ contract BridgeAssist is
     }
 
     event AddToken(address indexed owner, address indexed token);
-    event SetDev(address indexed owner, address dev);
     event SetRelayer(address indexed owner, address relayer);
+    event SetMultisig(address indexed owner, address multisig);
     event Collect(address indexed sender, uint256 amount);
     event Dispense(address indexed sender, uint256 amount);
     event Submission(uint indexed transactionId);
     event Execution(uint indexed transactionId);
     event Confirmation(address indexed sender, uint indexed transactionId);
+    event MultisigSubmission(uint indexed transactionId);
 
     struct Transaction {
         address payable destination;
@@ -65,7 +68,6 @@ contract BridgeAssist is
 
     uint public lastTokenIndex;
 
-    address public dev;
     address public relayer;
     address public multisig;
 
@@ -73,15 +75,15 @@ contract BridgeAssist is
     mapping(uint => mapping(address => bool)) public confirmations;
     mapping(uint => address) public tokens;
 
+    receive() external payable {}
+
     function initialize(
-        address _dev, 
         address _relayer,
         address _multisig
     ) external initializer {
         __Context_init();
         __Ownable_init();
         __Pausable_init();
-        dev = _dev;
         relayer = _relayer;
         multisig = _multisig;
     }
@@ -99,14 +101,14 @@ contract BridgeAssist is
         emit AddToken(msg.sender, token);
     }
 
-    function setDev(address _dev) external onlyOwner notNull(_dev) {
-        dev = _dev;
-        emit SetDev(msg.sender, _dev);
-    }
-
     function setRelayer(address _relayer) external onlyOwner notNull(_relayer) {
         relayer = _relayer;
         emit SetRelayer(msg.sender, _relayer);
+    }
+
+    function setMultisig(address _multisig) external onlyOwner notNull(_multisig) {
+        multisig = _multisig;
+        emit SetMultisig(msg.sender, _multisig);
     }
 
     function submitTransaction(address payable destination, uint tokenIndex, uint value, uint code) external nonReentrant whenNotPaused returns (uint transactionId) {
@@ -121,6 +123,10 @@ contract BridgeAssist is
             confirmations[transactionId][destination] = true;
             confirmations[transactionId][multisig] = true;
             executeTransaction(transactionId);
+        } else {
+            bytes memory data = abi.encodeWithSignature("confirmTransaction(uint)", [transactionId]);
+            uint multisigTxId = IMultiSigWallet(multisig).submitTransaction(payable(address(this)), address(0), 3, 0, 0, data, 0);
+            emit MultisigSubmission(multisigTxId);
         }
     }
 
@@ -141,14 +147,14 @@ contract BridgeAssist is
     function isConfirmed(uint transactionId) public view returns (bool) {
         address user = transactions[transactionId].destination;
         mapping (address => bool) storage comfirm = confirmations[transactionId];
-        if (comfirm[user] && comfirm[dev] && comfirm[multisig])
+        if (comfirm[user] && comfirm[multisig])
             return true;
         else
             return false;
     }
     
     function confirmTransaction(uint transactionId) external nonReentrant whenNotPaused transactionExists(transactionId) notConfirmed(transactionId, msg.sender) {
-        require(msg.sender == transactions[transactionId].destination || msg.sender == dev || msg.sender == multisig, "Only destination or dev or multisig can approve tx");
+        require(msg.sender == transactions[transactionId].destination || msg.sender == multisig, "Only destination or multisig can approve tx");
         uint tokenIndex = transactions[transactionId].tokenIndex;
         address token = tokens[tokenIndex];
         require(transactions[transactionId].value <= IERC20(token).balanceOf(address(this)), "Not enough token to withdraw");

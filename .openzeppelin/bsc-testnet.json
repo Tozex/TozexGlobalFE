@@ -1,30 +1,20 @@
 {
   "manifestVersion": "3.2",
   "admin": {
-    "address": "0x5fa0Ea29D63ed62cbebB694771eFcBB235d18567",
-    "txHash": "0x570e54ade67c2ad6feba68077e54b05811e4e7671e88b25b33cd627e1c883448"
+    "address": "0x71271ec0331201a4f3D4e2BC7Dd960B830587572",
+    "txHash": "0x6dd3e9def02ec9e9fedc6748268b53ab4b718be58293a6bb84f2946eea1b5b4f"
   },
   "proxies": [
     {
-      "address": "0xdb9d073439e5064312c60De43083071835D64998",
-      "txHash": "0x7c4b47179c3ee2d1ae180a0f1b473ff113fecd619ec04804dc5aeddc82f98157",
-      "kind": "transparent"
-    },
-    {
-      "address": "0xc5bA238DbecC297eE78cAc99BBB5AD2E53c13F82",
-      "txHash": "0xb909e05bcce99bd5b1a923ead3afa7c7114ed049c03a0091779799d8edeefc1f",
-      "kind": "transparent"
-    },
-    {
-      "address": "0x421C546C410F74d1b1F33a27F6F3E8288f0C791F",
-      "txHash": "0x2231f492cd821d3e46498077880755365a5c7dc0777465eca223d11fb570777d",
+      "address": "0x4fd2f6C62c532b35C75dE2493D17eb4FcDA38479",
+      "txHash": "0x2d6a30da0944e64944c90a3206db521db25f14b65f1eae9056cf515af287ec7e",
       "kind": "transparent"
     }
   ],
   "impls": {
-    "93782611c262b61cd2c29d085e7ce3ae15cc33e4bf168adaa72a6109691258ba": {
-      "address": "0x09F765eBC1b5eB86292cEe072F5372Ec3687507c",
-      "txHash": "0x76208ef1add0f53aa4ab769cc9b2d1d2681366c801c18002a48c85f11d5f6dfd",
+    "798b1c05326a5b919950104904f9ccbe95c318147df208279f0a4d9a6941f521": {
+      "address": "0x586387ea7f343b78c3e82Ccdb767731F1a965F8e",
+      "txHash": "0x87b0af730ee012175f1ee9b604ba38f2f6879ddb34a4928db3caa8411d5b088a",
       "layout": {
         "solcVersion": "0.8.5",
         "storage": [
@@ -107,7 +97,7 @@
             "slot": "201",
             "type": "t_uint256",
             "contract": "BridgeAssist",
-            "src": "contracts\\BridgeAssist.sol:61"
+            "src": "contracts\\BridgeAssist.sol:67"
           },
           {
             "label": "lastTokenIndex",
@@ -115,31 +105,31 @@
             "slot": "202",
             "type": "t_uint256",
             "contract": "BridgeAssist",
-            "src": "contracts\\BridgeAssist.sol:63"
-          },
-          {
-            "label": "dev",
-            "offset": 0,
-            "slot": "203",
-            "type": "t_address",
-            "contract": "BridgeAssist",
-            "src": "contracts\\BridgeAssist.sol:65"
+            "src": "contracts\\BridgeAssist.sol:69"
           },
           {
             "label": "relayer",
             "offset": 0,
+            "slot": "203",
+            "type": "t_address",
+            "contract": "BridgeAssist",
+            "src": "contracts\\BridgeAssist.sol:71"
+          },
+          {
+            "label": "multisig",
+            "offset": 0,
             "slot": "204",
             "type": "t_address",
             "contract": "BridgeAssist",
-            "src": "contracts\\BridgeAssist.sol:66"
+            "src": "contracts\\BridgeAssist.sol:72"
           },
           {
             "label": "transactions",
             "offset": 0,
             "slot": "205",
-            "type": "t_mapping(t_uint256,t_struct(Transaction)1056_storage)",
+            "type": "t_mapping(t_uint256,t_struct(Transaction)1713_storage)",
             "contract": "BridgeAssist",
-            "src": "contracts\\BridgeAssist.sol:68"
+            "src": "contracts\\BridgeAssist.sol:74"
           },
           {
             "label": "confirmations",
@@ -147,7 +137,7 @@
             "slot": "206",
             "type": "t_mapping(t_uint256,t_mapping(t_address,t_bool))",
             "contract": "BridgeAssist",
-            "src": "contracts\\BridgeAssist.sol:69"
+            "src": "contracts\\BridgeAssist.sol:75"
           },
           {
             "label": "tokens",
@@ -155,7 +145,7 @@
             "slot": "207",
             "type": "t_mapping(t_uint256,t_address)",
             "contract": "BridgeAssist",
-            "src": "contracts\\BridgeAssist.sol:70"
+            "src": "contracts\\BridgeAssist.sol:76"
           }
         ],
         "types": {
@@ -191,11 +181,11 @@
             "label": "mapping(uint256 => mapping(address => bool))",
             "numberOfBytes": "32"
           },
-          "t_mapping(t_uint256,t_struct(Transaction)1056_storage)": {
+          "t_mapping(t_uint256,t_struct(Transaction)1713_storage)": {
             "label": "mapping(uint256 => struct BridgeAssist.Transaction)",
             "numberOfBytes": "32"
           },
-          "t_struct(Transaction)1056_storage": {
+          "t_struct(Transaction)1713_storage": {
             "label": "struct BridgeAssist.Transaction",
             "members": [
               {

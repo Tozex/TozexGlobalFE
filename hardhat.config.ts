@@ -57,8 +57,8 @@ const config: HardhatUserConfig = {
         process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
         timeout: 20000,
       allowUnlimitedContractSize: true,
-      gas: 50000000, //units of gas you are willing to pay, aka gas limit
-      gasPrice: 18000000000, //gas is typically in units of gwei, but you must enter it as wei here
+      gas: 500000000, //units of gas you are willing to pay, aka gas limit
+      gasPrice: 10000000000
     },
     bscmainnet: {
       url: process.env.BSC_MAINNET_URL || "",
@@ -87,7 +87,7 @@ const config: HardhatUserConfig = {
     currency: "USD",
   },
   etherscan: {
-    apiKey: process.env.POLYGONZKEVM_API_KEY,
+    apiKey: process.env.BSCSCAN_API_KEY,
   },
   mocha: {
     timeout: 100000000
