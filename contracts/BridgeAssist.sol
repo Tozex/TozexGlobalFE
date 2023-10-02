@@ -68,12 +68,14 @@ contract BridgeAssist is
 
     uint public lastTokenIndex;
 
+    address public dev;
     address public relayer;
-    address public multisig;
 
     mapping(uint => Transaction) public transactions;
     mapping(uint => mapping(address => bool)) public confirmations;
     mapping(uint => address) public tokens;
+
+    address public multisig;
 
     receive() external payable {}
 
@@ -124,7 +126,7 @@ contract BridgeAssist is
             confirmations[transactionId][multisig] = true;
             executeTransaction(transactionId);
         } else {
-            bytes memory data = abi.encodeWithSignature("confirmTransaction(uint)", [transactionId]);
+            bytes memory data = abi.encodeWithSignature("confirmTransaction(uint256)", transactionId);
             uint multisigTxId = IMultiSigWallet(multisig).submitTransaction(payable(address(this)), address(0), 3, 0, 0, data, 0);
             emit MultisigSubmission(multisigTxId);
         }

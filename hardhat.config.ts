@@ -57,8 +57,8 @@ const config: HardhatUserConfig = {
         process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
         timeout: 20000,
       allowUnlimitedContractSize: true,
-      gas: 500000000, //units of gas you are willing to pay, aka gas limit
-      gasPrice: 10000000000
+      // gas: 500000000, //units of gas you are willing to pay, aka gas limit
+      gasPrice: 8000000000
     },
     bscmainnet: {
       url: process.env.BSC_MAINNET_URL || "",
@@ -66,6 +66,7 @@ const config: HardhatUserConfig = {
         process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
       timeout: 200000,
       allowUnlimitedContractSize: true,
+      gasPrice: 8000000000
     },
     avalanche: {
       url: 'https://api.avax.network/ext/bc/C/rpc',
@@ -87,7 +88,7 @@ const config: HardhatUserConfig = {
     currency: "USD",
   },
   etherscan: {
-    apiKey: process.env.BSCSCAN_API_KEY,
+    apiKey: process.env.AVALANCHE_API_KEY,
   },
   mocha: {
     timeout: 100000000
