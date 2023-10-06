@@ -7,11 +7,11 @@ dotenv.config();
 async function main() {
   const signer = await ethers.getSigners();
   console.log(signer[0].address)
-  console.log(await signer[0].getBalance())
+  // console.log(await signer[0].getBalance())
   const BridgeAssist = await ethers.getContractFactory("BridgeAssist");
   const bridgeAssist = await upgrades.deployProxy(BridgeAssist, [
-    process.env.DEV_WALLET,
-    process.env.RELAYER_WALLET
+    process.env.RELAYER_WALLET,
+    process.env.MULTISIG_WALLET
   ]);
 
   await bridgeAssist.deployed();

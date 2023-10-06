@@ -5,12 +5,17 @@ import { createFixtureLoader } from "ethereum-waffle";
 import { contractFixture } from "./fixtures";
 import { BridgeAssist } from "../typechain/BridgeAssist";
 import { MockToken } from '../typechain/MockToken';
+import { MockERC721 } from '../typechain/MockERC721';
+import { MockERC1155 } from '../typechain/MockERC1155';
 
 type ThenArg<T> = T extends PromiseLike<infer U> ? U : T;
 
 describe("BridgeAssist", function () {
   let bridgeAssist: ThenArg<ReturnType<typeof contractFixture>>["bridgeAssist"];
   let mockToken: ThenArg<ReturnType<typeof contractFixture>>["mockToken"];
+  let mockERC721: ThenArg<ReturnType<typeof contractFixture>>["mockERC721"];
+  let mockERC1155: ThenArg<ReturnType<typeof contractFixture>>["mockERC1155"];
+  
   let dev: Wallet;
   let relayer: Wallet;
   let owner: Wallet;

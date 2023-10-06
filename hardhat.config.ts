@@ -48,6 +48,8 @@ const config: HardhatUserConfig = {
       url: process.env.MAINNET_URL || "",
       accounts:
         process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
+      timeout: 200000,
+      allowUnlimitedContractSize: true,
     },
     bsctestnet: {
       url: process.env.BSC_TESTNET_URL || "",
@@ -55,21 +57,38 @@ const config: HardhatUserConfig = {
         process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
         timeout: 20000,
       allowUnlimitedContractSize: true,
-      gas: 50000000, //units of gas you are willing to pay, aka gas limit
-      gasPrice: 18000000000, //gas is typically in units of gwei, but you must enter it as wei here
+      // gas: 500000000, //units of gas you are willing to pay, aka gas limit
+      gasPrice: 8000000000
     },
     bscmainnet: {
       url: process.env.BSC_MAINNET_URL || "",
       accounts:
         process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
-    }
+      timeout: 200000,
+      allowUnlimitedContractSize: true,
+      gasPrice: 8000000000
+    },
+    avalanche: {
+      url: 'https://api.avax.network/ext/bc/C/rpc',
+      accounts:
+        process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
+      timeout: 200000,
+      allowUnlimitedContractSize: true,
+    },
+    polygonzkevm: {
+      url: 'https://zkevm-rpc.com',
+      accounts:
+        process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
+      timeout: 200000,
+      allowUnlimitedContractSize: true,
+    },
   },
   gasReporter: {
     enabled: process.env.REPORT_GAS !== undefined,
     currency: "USD",
   },
   etherscan: {
-    apiKey: process.env.ETHERSCAN_API_KEY,
+    apiKey: process.env.AVALANCHE_API_KEY,
   },
   mocha: {
     timeout: 100000000
